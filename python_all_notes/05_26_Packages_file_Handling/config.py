@@ -1,0 +1,10 @@
+CSV_FILE_PATH = 'CSV_Files/xyz.csv'
+PORT_NUMBER = 5002
+MONGO_PORT_NUMBER = 27017
+
+EXCEL_FILE_PATH ='filename.xlsx'
+OUTPUT_FILE ='file path'
+EMAIL_ID = ''
+PASSWORD =''
+IMAGES_DIR = 'images'
+JSON_FILE_PATH = ''

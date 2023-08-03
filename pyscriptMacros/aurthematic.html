@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Adding Events</title>
+    <link rel="stylesheet" href="https://pyscript.net/alpha/pyscript.css" />
+    <script defer src="https://pyscript.net/alpha/pyscript.js"></script>
+  </head>
+
+  <py-env>
+    - pandas
+    - openpyxl
+    - paths:
+        - aurthematic.py
+        - add.py
+        - sub.py
+        - mul.py
+        - div.py
+        - excel.py
+        - sample.xlsx
+        - IT_JPG_TO_PNG.xlsx
+  </py-env>
+<py-script>
+import pyodide
+import js
+import os
+from aurthematic import operations
+
+
+
+class myClass():
+    def __init__(self):
+        self.add_one_proxy = pyodide.create_proxy(self.get_data)
+        js.document.getElementById('mybutton').addEventListener("click", self.add_one_proxy)
+
+    def get_data(self, pointerEventObj):
+        """Callback from JS when a button is clicked"""
+        btn_elem = pointerEventObj.currentTarget
+        operation_value = js.document.getElementById('script').value
+        a = js.document.getElementById('avalue').value
+        b = js.document.getElementById('bvalue').value
+        js.document.getElementById('resultdiv').innerHTML = str(operations(operation_value,a,b))
+
+
+    def shutdown(self):
+        self.add_one_proxy.destroy()
+
+klass = myClass()
+
+# Make sure in the program to keep holding a reference of klass ...
+# do the whole program here
+# When all done, call klass.shutdown()
+</py-script>
+
+<body>
+
+<!--    <input id="avalue" type="number" placeholder="Enter your A Value"><br>-->
+<!--    <input id="bvalue" type="number" placeholder="Enter your B Value"><br>-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <label for="scripts">Choose an Operation:</label>
+      <select name="scripts" id="script" onchange="myFunction()">
+        <option value="0">Select ..</option>
+        <option value="1">Addition</option>
+        <option value="2">Subtraction</option>
+        <option value="3">Multiplication</option>
+        <option value="4">Division</option>
+        <option value="5">Excel Sheet Display</option>
+      </select>
+    <div id="inputArea"></div><br>
+    <button id="mybutton" type="button">Click me!</button><br><br><br>
+    <div id="resultdiv">Upper Case values will be displayed here!</div>
+<script>
+function myFunction() {
+  var twoInputValue = ["1","2","3","4"];
+  var oneInputValue = ["5"];
+  var x = document.getElementById("script").value;
+  check = twoInputValue.includes(x)
+  console.log(check)
+  if (check == true){
+        document.getElementById("inputArea").innerHTML = '<input id="avalue" type="text" placeholder="Enter your A Value"><br><input id="bvalue" type="text" placeholder="Enter your B Value"><br>';
+        }
+  else{
+  document.getElementById("inputArea").innerHTML = '<input id="avalue" type="text" placeholder="Enter your Input Path"><br>';
+  }
+}
+</script>
+</body>
+</html>
